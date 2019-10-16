@@ -1,6 +1,6 @@
 {
   "name": "nginxhost",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "automatically generate nginx-vhosts file for nodejs project.",
   "bin": {
     "nginxhost": "index.js"
