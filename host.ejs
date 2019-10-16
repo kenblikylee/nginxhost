@@ -1,0 +1,30 @@
+server {
+    listen <%= listen%>;
+    <%if (typeof(ssl) !== 'undefined' && ssl) {%>listen 443 ssl;<%}%>
+    server_name <%= server_name%>;
+    root <%= root%>;
+    index <%= index%>;
+    <%if (typeof(ssl) !== 'undefined' && ssl && typeof(sslConfig) !== 'undefined' && sslConfig) {%>
+    ssl_certificate   cert/<%= sslConfig.pem%>.pem;
+    ssl_certificate_key  cert/<%= sslConfig.key%>.key;
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    <%}%>
+    <%if (typeof(staticCached) !== 'undefined' && staticCached) {%>location ~ .*\.(js|css|gif|jpg|jpeg|png|woff|woff2|eot|otf|ttf)$ {
+      add_header Expires "Mon, 15 Apr 2028 23:00:00 GMT";
+      add_header Cache-Control "max-age=315360000";
+    }<%}%>
+    <%if (typeof(php) !== 'undefined' && php) {%>location ~ \.php$ {
+      include       fastcgi_params;
+      fastcgi_pass  127.0.0.1:9000;
+      fastcgi_index index.php;
+    }<%}%><%if (locations && locations.length) {
+        for (var i = 0, len = locations.length; i < len; i++) { loc=locations[i];%>
+    location <%= loc.path%> {
+      <% for(var j = 0, len2 = loc.orders.length; j < len2; j++) {%><%= loc.orders[j]%>
+      <%}%>
+    }<%}}%>
+}
