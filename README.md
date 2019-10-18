@@ -1,6 +1,7 @@
 # nginxhost
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/kenblikylee/nginxhost)
+![npm weekly download](https://img.shields.io/npm/dw/nginxhost)
 [![license](https://img.shields.io/github/license/kenblikylee/nginxhost)](https://github.com/kenblikylee/nginxhost/blob/master/LICENSE)
 
 automatically generate nginx-vhosts file for nodejs project.
